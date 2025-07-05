@@ -31,35 +31,44 @@ function App() {
     }
   };
 
+  //Eliminar tarea
+  const eliminarTarea = (index) => {
+    setTareas(tareas.filter((_, i) => i !== index))
+  };
+
   return (
     <>
-      <h1>Contador de tareas</h1>
-      <div>
-        <input
-          type="text"
-          value={nuevaTarea}
-          onChange={(e) => setNuevaTarea(e.target.value)} //Esto actualiza la tarea nueva cada que se presiona una tecla
-          placeholder="Nombre de la tarea"
-        />
+      <div id='main-container'>
+        <h1>Contador de tareas</h1>
+        <div id='inputs'>
+          <input
+            type="text"
+            value={nuevaTarea}
+            onChange={(e) => setNuevaTarea(e.target.value)} //Esto actualiza la tarea nueva cada que se presiona una tecla
+            placeholder="Nombre de la tarea"
+          />
 
-        <input
-          type="number"
-          value={duracion}
-          onChange={(e) => setDuracion(e.target.value)}
-          placeholder='Duración en minutos'
-        />
-        <button onClick={agregarTarea}>Agregar Tarea</button>
+          <input
+            type="number"
+            value={duracion}
+            onChange={(e) => setDuracion(e.target.value)}
+            placeholder='Duración en minutos'
+          />
+          <button onClick={agregarTarea}>Agregar Tarea</button>
+        </div>
+
+        <h2>Tareas</h2>
+        <ul id='list'>
+          {tareas.map((tarea, index) => (
+            <li key={index}>
+              {tarea.nombre} ({tarea.duracion} minutos)
+              <button id='done' onClick= {() => eliminarTarea(index)} >Done</button>
+            </li>
+          ))}
+        </ul>
+
+        <h3>Total de tiempo: {calcularTiempoTotal} minutos</h3>
       </div>
-
-      <h2>Tareas</h2>
-      <ul>
-        {tareas.map((tarea, index) => (
-          <li key={index}>{tarea.nombre}: {tarea.duracion} minutos</li>
-        ))}
-      </ul>
-
-      <h3>Total de tiempo: {calcularTiempoTotal} minutos</h3>
-
     </>
   )
 }
